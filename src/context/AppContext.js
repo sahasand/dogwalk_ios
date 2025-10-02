@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import { dogData as initialDogs, walkerData, walkHistoryData as initialWalkHistory, recurringWalkPlans as initialRecurringPlans, inboxData, chatData, paymentData, userProfile as initialUserProfile } from '../data/mockData';
+import { dogData as initialDogs, walkerData as initialWalkers, walkHistoryData as initialWalkHistory, recurringWalkPlans as initialRecurringPlans, inboxData, chatData, paymentData, userProfile as initialUserProfile } from '../data/mockData';
 
 const AppContext = createContext();
 
@@ -13,6 +13,7 @@ export const useAppContext = () => {
 
 export const AppProvider = ({ children }) => {
     const [dogs, setDogs] = useState(initialDogs);
+    const [walkers, setWalkers] = useState(initialWalkers);
     const [walkHistory, setWalkHistory] = useState(initialWalkHistory);
     const [recurringPlans, setRecurringPlans] = useState(initialRecurringPlans);
     const [userProfile, setUserProfile] = useState(initialUserProfile);
@@ -115,14 +116,19 @@ export const AppProvider = ({ children }) => {
 
     // Walker management
     const toggleWalkerFavorite = (walkerId) => {
-        const walker = walkerData.find(w => w.id === walkerId);
-        if (walker) {
-            walker.favorite = !walker.favorite;
-        }
+        const numericId = typeof walkerId === 'string' ? parseInt(walkerId, 10) : walkerId;
+        setWalkers(prevWalkers =>
+            prevWalkers.map(walker =>
+                walker.id === numericId
+                    ? { ...walker, favorite: !walker.favorite }
+                    : walker
+            )
+        );
     };
 
     const getWalkerById = (id) => {
-        return walkerData.find(w => w.id === parseInt(id));
+        const numericId = typeof id === 'string' ? parseInt(id, 10) : id;
+        return walkers.find(w => w.id === numericId);
     };
 
     // User profile management
@@ -133,7 +139,7 @@ export const AppProvider = ({ children }) => {
     const value = {
         // Data
         dogs,
-        walkerData,
+        walkerData: walkers,
         walkHistory,
         recurringPlans,
         inboxData,
