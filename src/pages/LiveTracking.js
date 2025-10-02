@@ -10,7 +10,8 @@ const LiveTracking = () => {
     const [message, setMessage] = useState('');
 
     // Find walk by ID from URL, or fallback to first "In Progress" walk
-    const walk = walkHistory.find(w => w.id === parseInt(id)) || walkHistory.find(w => w.status === 'In Progress');
+    const walkId = Number(id);
+    const walk = walkHistory.find(w => w.id === walkId) || walkHistory.find(w => w.status === 'In Progress');
 
     const handleBack = () => {
         vibrate();
@@ -55,9 +56,13 @@ const LiveTracking = () => {
                     </div>
                     <div className="glass-card non-hover p-4">
                         <div className="flex items-center gap-4">
-                            <img src={walk.walker?.avatar} className="w-12 h-12 avatar-frame object-cover" alt={walk.walker?.name} />
+                            <img
+                                src={walk.walker?.avatar || 'https://placehold.co/100x100/0F766E/0B1120?text=W'}
+                                className="w-12 h-12 avatar-frame object-cover"
+                                alt={walk.walker?.name || 'Walker avatar'}
+                            />
                             <p className="font-semibold">
-                                {walk.walker?.name} is walking {walk.dogs?.map(d => d.name).join(', ')}
+                                {walk.walker?.name || 'Your walker'} is walking {(walk.dogs?.map(d => d.name) ?? ['your dog']).join(', ')}
                             </p>
                         </div>
                     </div>
