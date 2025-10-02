@@ -126,7 +126,7 @@ const Profile = () => {
                     className="profile-link py-3 flex justify-between items-center"
                     onClick={(e) => {
                         e.preventDefault();
-                        handleNavigate('/help-support');
+                        handleNavigate('/help');
                     }}
                 >
                     <span>Help &amp; Support</span>
