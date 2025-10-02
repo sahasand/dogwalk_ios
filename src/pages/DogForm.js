@@ -5,7 +5,7 @@ import { vibrate, showToast } from '../utils/helpers';
 
 const DogForm = () => {
     const navigate = useNavigate();
-    const { dogId } = useParams();
+    const { id: dogId } = useParams();
     const { getDogById, addDog, updateDog } = useAppContext();
 
     const dog = dogId ? getDogById(dogId) : null;

@@ -9,12 +9,12 @@ const Dogs = () => {
 
     const handleEditDog = (dogId) => {
         vibrate();
-        navigate(`/dogs/edit/${dogId}`);
+        navigate(`/dog/edit/${dogId}`);
     };
 
     const handleAddDog = () => {
         vibrate();
-        navigate('/dogs/new');
+        navigate('/dog/new');
     };
 
     return (
