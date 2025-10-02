@@ -5,7 +5,8 @@ import { vibrate } from '../utils/helpers';
 
 const WalkerProfile = () => {
     const navigate = useNavigate();
-    const { walkerId } = useParams();
+    const { id } = useParams();
+    const walkerId = id;
     const [searchParams] = useSearchParams();
     const backTarget = searchParams.get('back') || 'home';
     const { getWalkerById, toggleWalkerFavorite } = useAppContext();
