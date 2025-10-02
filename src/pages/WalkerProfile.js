@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
 import { vibrate } from '../utils/helpers';
@@ -12,7 +12,6 @@ const WalkerProfile = () => {
     const { getWalkerById, toggleWalkerFavorite } = useAppContext();
 
     const walker = getWalkerById(walkerId);
-    const [isFavorite, setIsFavorite] = useState(walker?.favorite || false);
 
     const handleBack = () => {
         vibrate();
@@ -25,8 +24,10 @@ const WalkerProfile = () => {
 
     const handleFavoriteToggle = () => {
         vibrate();
-        toggleWalkerFavorite(parseInt(walkerId));
-        setIsFavorite(!isFavorite);
+        if (!walker) {
+            return;
+        }
+        toggleWalkerFavorite(walkerId);
     };
 
     if (!walker) {
@@ -43,8 +44,9 @@ const WalkerProfile = () => {
                 </button>
                 <h1>Walker Profile</h1>
                 <button
-                    className={`favorite-btn p-2 ${isFavorite ? 'favorited' : ''}`}
+                    className={`favorite-btn p-2 ${walker?.favorite ? 'favorited' : ''}`}
                     onClick={handleFavoriteToggle}
+                    aria-pressed={walker?.favorite ?? false}
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none">
                         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
