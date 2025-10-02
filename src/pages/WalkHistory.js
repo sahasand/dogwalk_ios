@@ -20,7 +20,7 @@ const WalkHistory = () => {
 
     const handleWalkClick = (walkId) => {
         vibrate();
-        navigate(`/walk-summary/${walkId}?back=history`);
+        navigate(`/walk/${walkId}?back=history`);
     };
 
     return (
