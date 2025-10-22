@@ -501,7 +501,7 @@ const RecurringWalks = () => {
                                                                 </svg>
                                                             )}
                                                         </div>
-                                                        <p className="text-xs text-soft">★ {walker.rating.toFixed(1)} • ${walker.price.toFixed(0)}</p>
+                                                        <p className="text-xs text-soft">★ {walker.rating?.toFixed(1) || '0.0'} • ${walker.price?.toFixed(0) || '0'}</p>
                                                     </div>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="selection-indicator">
                                                         <polyline points="20 6 9 17 4 12"></polyline>

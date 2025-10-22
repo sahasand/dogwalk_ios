@@ -61,10 +61,10 @@ const WalkerProfile = () => {
                         alt={walker.name}
                     />
                     <h2 className="text-2xl font-bold mt-4">{walker.name}</h2>
-                    <p className="text-soft">★ {walker.rating} ({walker.reviews} Reviews)</p>
+                    <p className="text-soft">★ {walker.rating || '0.0'} ({walker.reviews || 0} Reviews)</p>
                 </div>
                 <div className="flex justify-center gap-2 flex-wrap">
-                    {walker.badges.map((badge, index) => (
+                    {(walker.badges || []).map((badge, index) => (
                         <span key={index} className="badge-muted">{badge}</span>
                     ))}
                 </div>
