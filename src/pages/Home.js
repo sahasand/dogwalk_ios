@@ -255,7 +255,8 @@ const Home = () => {
                         const walkDate = new Date(`${walk.date}T00:00:00`);
                         const isValidDate = !Number.isNaN(walkDate.valueOf());
                         const formattedDate = isValidDate ? walkDate.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : walk.date;
-                        const buttonLabel = `View walk summary for ${walk.walker.name} on ${formattedDate}`;
+                        const walkerName = walk.walker?.name || 'Walker';
+                        const buttonLabel = `View walk summary for ${walkerName} on ${formattedDate}`;
                         return (
                             <button
                                 key={walk.id}
@@ -265,14 +266,14 @@ const Home = () => {
                                 aria-label={buttonLabel}
                             >
                                 <div className="recent-activity-left">
-                                    <img src={walk.walker.avatar} className="recent-activity-avatar" alt={walk.walker.name} />
+                                    <img src={walk.walker?.avatar || 'https://placehold.co/64x64/0F766E/0B1120?text=W'} className="recent-activity-avatar" alt={walkerName} />
                                     <div>
-                                        <p className="recent-activity-title">Walk with {walk.walker.name}</p>
+                                        <p className="recent-activity-title">Walk with {walkerName}</p>
                                         <p className="recent-activity-meta">{formattedDate}</p>
                                     </div>
                                 </div>
                                 <div className="recent-activity-right">
-                                    <span className="recent-activity-amount">${walk.price.toFixed(2)}</span>
+                                    <span className="recent-activity-amount">${walk.price?.toFixed(2) || '0.00'}</span>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                                         <path d="m9 18 6-6-6-6" />
                                     </svg>

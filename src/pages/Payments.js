@@ -456,7 +456,7 @@ const Payments = () => {
                             paymentData.transactions.map((t, index) => (
                                 <div key={index} className="flex justify-between text-sm text-soft">
                                     <p>{t.desc}</p>
-                                    <p>${t.amount.toFixed(2)}</p>
+                                    <p>${t.amount != null ? t.amount.toFixed(2) : '0.00'}</p>
                                 </div>
                             ))
                         ) : (

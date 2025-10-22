@@ -44,10 +44,10 @@ const WalkSummary = () => {
                     />
                 </div>
                 <div className="glass-card p-4 flex items-center gap-4">
-                    <img src={walk.walker.avatar} className="w-16 h-16 avatar-frame object-cover" alt={walk.walker.name} />
+                    <img src={walk.walker?.avatar || 'https://placehold.co/64x64/0F766E/0B1120?text=W'} className="w-16 h-16 avatar-frame object-cover" alt={walk.walker?.name || 'Walker'} />
                     <div>
                         <p className="text-soft">Your walker was</p>
-                        <p className="font-bold text-xl text-white">{walk.walker.name}</p>
+                        <p className="font-bold text-xl text-white">{walk.walker?.name || 'Unknown Walker'}</p>
                     </div>
                 </div>
                 {walk.photos && walk.photos.length > 0 && (
@@ -92,7 +92,7 @@ const WalkSummary = () => {
                 )}
                 <div className="glass-card p-4">
                     <h3 className="font-semibold mb-2">Walker's Note</h3>
-                    <p className="text-soft italic">"{walk.note}"</p>
+                    <p className="text-soft italic">"{walk.note || 'No notes from walker'}"</p>
                 </div>
             </div>
         </div>

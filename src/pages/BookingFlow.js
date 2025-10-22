@@ -388,10 +388,10 @@ const BookingFlow = () => {
                                                         </svg>
                                                     )}
                                                 </div>
-                                                <p className="text-sm text-soft">★ {walker.rating.toFixed(1)} ({walker.reviews} reviews)</p>
+                                                <p className="text-sm text-soft">★ {walker.rating?.toFixed(1) || '0.0'} ({walker.reviews || 0} reviews)</p>
                                             </div>
                                             <div className="ml-auto flex flex-col items-end justify-between gap-3 self-stretch">
-                                                <p className="text-xl font-bold text-white">${walker.price.toFixed(2)}</p>
+                                                <p className="text-xl font-bold text-white">${walker.price?.toFixed(2) || '0.00'}</p>
                                                 <button
                                                     type="button"
                                                     className={`favorite-btn ${walker.favorite ? 'favorited' : ''}`}
