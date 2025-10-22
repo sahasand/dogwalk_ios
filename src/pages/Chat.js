@@ -8,8 +8,9 @@ const Chat = () => {
     const { walkerId } = useParams();
     const { walkerData, chatData } = useAppContext();
 
-    const walker = walkerData.find(w => w.id === parseInt(walkerId));
-    const messages = chatData[walkerId] || [];
+    const walkerIdNum = parseInt(walkerId, 10);
+    const walker = walkerData.find(w => w.id === walkerIdNum);
+    const messages = chatData[walkerId] || chatData[walkerIdNum] || [];
     const [messageText, setMessageText] = useState('');
 
     const handleBack = () => {

@@ -11,7 +11,12 @@ const BottomNav = () => {
         navigate(path);
     };
 
-    const isActive = (path) => location.pathname === path;
+    const isActive = (path) => {
+        // For home, use exact match to avoid matching all paths starting with '/'
+        if (path === '/') return location.pathname === '/';
+        // For other paths, check if current path starts with that path
+        return location.pathname.startsWith(path);
+    };
 
     return (
         <nav className="bottom-nav">
