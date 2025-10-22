@@ -29,7 +29,7 @@ const Dogs = () => {
                         <span className="text-5xl">{dog.avatar}</span>
                         <div className="flex-grow">
                             <p className="font-bold text-lg text-white">{dog.name}</p>
-                            <p className="text-sm text-soft">{dog.breed}, {dog.age} years old</p>
+                            <p className="text-sm text-soft">{dog.breed || 'Unknown breed'}, {dog.age || 'Unknown'} years old</p>
                         </div>
                         <button
                             className="btn-secondary px-3 py-2 text-sm rounded-lg dog-edit-btn"

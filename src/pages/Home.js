@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
 import { vibrate } from '../utils/helpers';
@@ -6,14 +6,6 @@ import { vibrate } from '../utils/helpers';
 const Home = () => {
     const navigate = useNavigate();
     const { walkHistory, dogs } = useAppContext();
-
-    useEffect(() => {
-        renderDashboard();
-    }, [walkHistory, dogs]);
-
-    const renderDashboard = () => {
-        // Empty for now - all logic is in the return statement
-    };
 
     const getUpcomingWalk = () => {
         const statusPriority = { 'In Progress': 0, 'Upcoming': 1 };

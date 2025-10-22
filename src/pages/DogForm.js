@@ -41,7 +41,8 @@ const DogForm = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
+        const processedValue = name === 'age' ? (value ? parseInt(value, 10) : '') : value;
+        setFormData(prev => ({ ...prev, [name]: processedValue }));
     };
 
     const handleSubmit = (e) => {

@@ -39,6 +39,19 @@ const BookingFlow = () => {
         }
     }, [prefill, dogs, bookingState.selectedDogs.length]);
 
+    // Auto-update filtered walkers when data or filter changes
+    useEffect(() => {
+        let sorted = [...walkerData];
+        if (activeFilter === 'price') {
+            sorted.sort((a, b) => a.price - b.price);
+        } else if (activeFilter === 'top-rated') {
+            sorted.sort((a, b) => b.rating - a.rating);
+        } else if (activeFilter === 'favorites') {
+            sorted = sorted.filter(w => w.favorite);
+        }
+        setFilteredWalkers(sorted);
+    }, [walkerData, activeFilter]);
+
     const handleBack = () => {
         vibrate();
         navigate('/');
@@ -103,15 +116,6 @@ const BookingFlow = () => {
     const handleFilterChange = (filter) => {
         vibrate();
         setActiveFilter(filter);
-        let sorted = [...walkerData];
-        if (filter === 'price') {
-            sorted.sort((a, b) => a.price - b.price);
-        } else if (filter === 'top-rated') {
-            sorted.sort((a, b) => b.rating - a.rating);
-        } else if (filter === 'favorites') {
-            sorted = sorted.filter(w => w.favorite);
-        }
-        setFilteredWalkers(sorted);
     };
 
     const handleWalkerSelect = (walker) => {
@@ -123,8 +127,6 @@ const BookingFlow = () => {
         e.stopPropagation();
         vibrate();
         toggleWalkerFavorite(walkerId);
-        // Re-apply filter to update the list
-        handleFilterChange(activeFilter);
     };
 
     const handleContinueToScreen3 = () => {
