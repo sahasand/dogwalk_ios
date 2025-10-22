@@ -17,6 +17,7 @@ export const AppProvider = ({ children }) => {
     const [walkHistory, setWalkHistory] = useState(initialWalkHistory);
     const [recurringPlans, setRecurringPlans] = useState(initialRecurringPlans);
     const [userProfile, setUserProfile] = useState(initialUserProfile);
+    const [payment, setPayment] = useState(paymentData);
     const [bookingState, setBookingState] = useState({
         service: 30,
         price: 25,
@@ -30,7 +31,7 @@ export const AppProvider = ({ children }) => {
 
     // Dog management
     const addDog = (dog) => {
-        const newDog = { ...dog, id: Date.now() };
+        const newDog = { ...dog, id: Date.now() + Math.random() };
         setDogs([...dogs, newDog]);
         return newDog;
     };
@@ -44,24 +45,28 @@ export const AppProvider = ({ children }) => {
     };
 
     const getDogById = (id) => {
-        return dogs.find(dog => dog.id === parseInt(id));
+        const numericId = parseInt(id, 10);
+        if (Number.isNaN(numericId)) return undefined;
+        return dogs.find(dog => dog.id === numericId);
     };
 
     // Walk management
     const addWalk = (walk) => {
-        const newWalk = { ...walk, id: Date.now() };
+        const newWalk = { ...walk, id: Date.now() + Math.random() };
         setWalkHistory([newWalk, ...walkHistory]);
         return newWalk;
     };
 
     const getWalkById = (id) => {
-        return walkHistory.find(walk => walk.id === parseInt(id));
+        const numericId = parseInt(id, 10);
+        if (Number.isNaN(numericId)) return undefined;
+        return walkHistory.find(walk => walk.id === numericId);
     };
 
     // Recurring plans management
     const createRecurringPlan = (data) => {
         const plan = {
-            id: Date.now(),
+            id: Date.now() + Math.random(),
             label: data.label?.trim() || '',
             dogIds: Array.isArray(data.dogIds) ? Array.from(new Set(data.dogIds.map(id => parseInt(id, 10)))) : [],
             walkerId: data.walkerId ? parseInt(data.walkerId, 10) : null,
@@ -136,6 +141,37 @@ export const AppProvider = ({ children }) => {
         setUserProfile({ ...userProfile, ...updates });
     };
 
+    // Payment management
+    const addPaymentCard = (cardData) => {
+        const newCard = {
+            ...cardData,
+            id: Date.now() + Math.random(),
+            isDefault: cardData.isDefault || payment.cards.length === 0
+        };
+
+        // If this is the default card, unset all other defaults
+        const updatedCards = newCard.isDefault
+            ? payment.cards.map(card => ({ ...card, isDefault: false }))
+            : [...payment.cards];
+
+        setPayment({
+            ...payment,
+            cards: [...updatedCards, newCard]
+        });
+
+        return newCard;
+    };
+
+    const setDefaultPaymentCard = (cardId) => {
+        setPayment({
+            ...payment,
+            cards: payment.cards.map(card => ({
+                ...card,
+                isDefault: card.id === cardId
+            }))
+        });
+    };
+
     const value = {
         // Data
         dogs,
@@ -144,7 +180,7 @@ export const AppProvider = ({ children }) => {
         recurringPlans,
         inboxData,
         chatData,
-        paymentData,
+        paymentData: payment,
         userProfile,
         bookingState,
 
@@ -171,6 +207,10 @@ export const AppProvider = ({ children }) => {
 
         // User profile methods
         updateUserProfile,
+
+        // Payment methods
+        addPaymentCard,
+        setDefaultPaymentCard,
 
         // Booking state
         setBookingState

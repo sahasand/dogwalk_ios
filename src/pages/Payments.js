@@ -18,7 +18,7 @@ const formatMaskedCard = (last4 = '') => {
 
 const Payments = () => {
     const navigate = useNavigate();
-    const { paymentData } = useAppContext();
+    const { paymentData, addPaymentCard, setDefaultPaymentCard } = useAppContext();
     const [showAddCard, setShowAddCard] = useState(false);
     const [noticeMessage, setNoticeMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -142,22 +142,16 @@ const Payments = () => {
 
         // Create card (in a real app, this would call an API)
         const digits = number.replace(/\D/g, '');
-        const newCard = {
-            id: Date.now(),
+        const cardData = {
             brand: detectCardBrand(digits),
             last4: digits.slice(-4),
             expiry,
             name,
             billingAddress: fullBillingAddress,
-            isDefault: makeDefault || cards.length === 0
+            isDefault: makeDefault
         };
 
-        // Update all cards if this is default
-        if (newCard.isDefault) {
-            cards.forEach(card => { card.isDefault = false; });
-        }
-
-        cards.push(newCard);
+        addPaymentCard(cardData);
 
         handleCloseAddCard();
         setNoticeMessage('New card saved.');
@@ -166,9 +160,7 @@ const Payments = () => {
 
     const handleMakeDefault = (cardId) => {
         vibrate();
-        cards.forEach(card => {
-            card.isDefault = card.id === cardId;
-        });
+        setDefaultPaymentCard(cardId);
         setNoticeMessage('Default payment method updated.');
         showToast('Default payment method updated');
     };
